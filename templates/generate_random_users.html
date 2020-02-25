@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %} randome user{% endblock %}
+{% block content %}
+<div style="text-align:center"><h2>Celery</h2></div>
+<div style="text-align:center">
+  <form method="post" id="random_ser">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">submit</button>
+  </form></div>
+{% endblock %}
