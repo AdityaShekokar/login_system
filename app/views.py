@@ -7,8 +7,6 @@ from django.contrib import messages
 from django.views.generic.edit import FormView
 from django.shortcuts import redirect
 
-from .forms import GenerateRandomUserForm
-from .task import create_random_user_accounts
 # Create your views here.
 from django.views import View
 
@@ -32,17 +30,3 @@ def Signup(request):
         form = UserCreationForm()
         return render(request, "signup.html", {"form": form})
 
-
-class GenerateRandomUserView(FormView):
-    template_name = 'generate_random_users.html'
-    form_class = GenerateRandomUserForm
-
-    def form_valid(self, form):
-        total = form.cleaned_data.get('total')
-        msg, users = create_random_user_accounts.delay(total)
-        messages.success(self.request, 'We are generating your random users! Wait a moment and refresh this page.')
-        return redirect('users_list')
-
-
-def user_list(request):
-    return render(request, "user_list.html")
